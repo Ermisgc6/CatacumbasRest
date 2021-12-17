@@ -38,13 +38,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserVo findById(Integer usuarioId) {
 		return repository.findById(usuarioId).orElse(null);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<UserVo> findAll() {
 		return repository.findAll();
 	}
