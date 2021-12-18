@@ -1,13 +1,18 @@
 package pe.idat.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="estado")
@@ -23,6 +28,12 @@ public class Estado implements Serializable{
 	private String denominacion;
 	@Column
 	private String descripcion;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "estado")
+	private Collection<Entrada> itemsEntrada = new ArrayList<>();
+	
 	
 	public Estado() {
 	}
@@ -55,6 +66,14 @@ public class Estado implements Serializable{
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Collection<Entrada> getItemsEntrada() {
+		return itemsEntrada;
+	}
+
+	public void setItemsEntrada(Collection<Entrada> itemsEntrada) {
+		this.itemsEntrada = itemsEntrada;
 	}
 	
 	

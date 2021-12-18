@@ -2,13 +2,18 @@ package pe.idat.entity;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "horario")
@@ -23,6 +28,11 @@ public class Horario implements Serializable{
 	private Time inicio;
 	@Column(nullable = false)
 	private Time fin;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "horario")
+	private Collection<Entrada> itemsEntrada = new ArrayList<>();
 	
 	
 	public Horario() {
@@ -63,6 +73,16 @@ public class Horario implements Serializable{
 
 	public void setFin(Time fin) {
 		this.fin = fin;
+	}
+
+
+	public Collection<Entrada> getItemsEntrada() {
+		return itemsEntrada;
+	}
+
+
+	public void setItemsEntrada(Collection<Entrada> itemsEntrada) {
+		this.itemsEntrada = itemsEntrada;
 	}
 	
 	

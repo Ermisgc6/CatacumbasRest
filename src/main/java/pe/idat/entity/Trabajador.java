@@ -1,6 +1,8 @@
 package pe.idat.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,10 +42,15 @@ public class Trabajador implements Serializable{
 	foreignKey=@ForeignKey(foreignKeyDefinition="foreign key(cargo_id) references cargo(cargo_id) "))
 	private Cargo cargo;
 	
+	
 	@JsonIgnore
 	@OneToOne(mappedBy = "trabajador")
 	private UserVo uservo;
 	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "trabajador")
+	private Collection<Ticket> itemsTicket = new ArrayList<>();
 	
 	
 	public Trabajador() {
@@ -115,6 +123,16 @@ public class Trabajador implements Serializable{
 
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
+	}
+
+
+	public Collection<Ticket> getItemsTicket() {
+		return itemsTicket;
+	}
+
+
+	public void setItemsTicket(Collection<Ticket> itemsTicket) {
+		this.itemsTicket = itemsTicket;
 	}
 	
 	

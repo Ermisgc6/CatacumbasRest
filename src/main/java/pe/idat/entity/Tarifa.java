@@ -1,13 +1,18 @@
 package pe.idat.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tarifa")
@@ -22,6 +27,11 @@ public class Tarifa implements Serializable{
 	private String descripcion;
 	@Column(nullable = false)
 	private Double precio;
+	
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy="itemsTarifa")
+	private Set<Entrada> itemsEntrada = new HashSet<>();
 	
 	
 	public Tarifa() {
@@ -62,6 +72,16 @@ public class Tarifa implements Serializable{
 
 	public void setPrecio(Double precio) {
 		this.precio = precio;
+	}
+
+
+	public Set<Entrada> getItemsEntrada() {
+		return itemsEntrada;
+	}
+
+
+	public void setItemsEntrada(Set<Entrada> itemsEntrada) {
+		this.itemsEntrada = itemsEntrada;
 	}
 	
 	
