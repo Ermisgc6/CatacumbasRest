@@ -5,7 +5,7 @@ import java.util.Collection;
 import pe.idat.entity.UserVo;
 
 public interface UserService {
-
+	public abstract UserVo findByUsername(String username) ;
 	public abstract void insert(UserVo uservo);
 	public abstract void update(UserVo uservo);
 	public abstract void delete(Integer usuarioId);

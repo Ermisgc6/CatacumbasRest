@@ -1,16 +1,21 @@
 package pe.idat.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="usuario")
@@ -30,6 +35,13 @@ public class UserVo implements Serializable{
 	@JoinColumn(name="trabajador_id", nullable=false, unique=true,  
 	foreignKey=@ForeignKey(foreignKeyDefinition="foreign key(trabajador_id) references trabajador(trabajador_id)"))
 	private Trabajador trabajador;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="roles_users",
+	joinColumns=@JoinColumn(name="usuario_id"),
+	inverseJoinColumns=@JoinColumn(name="role_id"))
+	private Set<RoleVo> itemsRole;
+
 	
 	
 	public UserVo() {
@@ -71,6 +83,14 @@ public class UserVo implements Serializable{
 
 	public void setTrabajador(Trabajador trabajador) {
 		this.trabajador = trabajador;
+	}
+
+	public Set<RoleVo> getItemsRole() {
+		return itemsRole;
+	}
+
+	public void setItemsRole(Set<RoleVo> itemsRole) {
+		this.itemsRole = itemsRole;
 	}
 	
 	
