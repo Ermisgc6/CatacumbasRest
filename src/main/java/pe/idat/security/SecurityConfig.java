@@ -16,26 +16,26 @@ import pe.idat.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserServiceImpl userServiceImpl;
-	
-	
-	
+
+
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(userServiceImpl);	
+		auth.userDetailsService(userServiceImpl);
 	}
-	
-	
-	
+
+
+
 	
 	//archivos de libre acceso
 	String[] resourses = new String[] {
-		"","","",""	
+			"/include/**","/css/**","/icons/**","/img/**","/js/**","/layer/**","/login.css"
 	};
 	
 	
@@ -44,13 +44,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 		http.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/","/login").permitAll()
-			.antMatchers("/inicio*").access("hasRole('ADMIN') or hasRole('USER')")
+			.antMatchers(resourses).permitAll()
+			.antMatchers("/","/museo/login").permitAll()
+			.antMatchers("/museo/inicio").permitAll()
+			.antMatchers("/museo/cargo/listar").access("hasRole('ADMIN')")
 			.anyRequest().authenticated()
 			.and()
-		.formLogin()
-			.loginPage("/login").permitAll()
-			.defaultSuccessUrl("/inicio")
+		.formLogin().loginPage("/museo/login")
+			.defaultSuccessUrl("/museo/inicio")
 			.failureUrl("/login?error=true")
 			.usernameParameter("username")
 			.passwordParameter("password")
@@ -67,12 +68,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 	}
-	
-	
+
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 
 }

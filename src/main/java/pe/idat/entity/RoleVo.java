@@ -1,21 +1,35 @@
 package pe.idat.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class RoleVo {
+@Table(name="rol")
+public class RoleVo implements Serializable {
 
-		
+	private static final long serialVersionUID = 1L;
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer roleId;
 	
 	@Column
-	private String role;
+	private String type;
+
+
+	@ManyToMany(mappedBy = "itemsRole", fetch=FetchType.EAGER)
+	private Set<UserVo> itemsUser= new HashSet<>();
+
+	public RoleVo() {
+	}
+
+	public RoleVo(Integer roleId, String type) {
+		this.roleId = roleId;
+		this.type = type;
+	}
 
 	public Integer getRoleId() {
 		return roleId;
@@ -25,15 +39,19 @@ public class RoleVo {
 		this.roleId = roleId;
 	}
 
-	public String getRole() {
-		return role;
+	public String getType() {
+		return type;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setType(String type) {
+		this.type = type;
 	}
-	
-	
-	
-	
+
+	public Set<UserVo> getItemsUser() {
+		return itemsUser;
+	}
+
+	public void setItemsUser(Set<UserVo> itemsUser) {
+		this.itemsUser = itemsUser;
+	}
 }

@@ -58,8 +58,8 @@ public class UserRestController {
 		UserVo usuariodb = userservice.findById(usuarioId);
 		
 		if(usuariodb!= null) {
-			usuariodb.setUsuario(usuario.getUsuario());
-			usuariodb.setContraseña(usuario.getContraseña());
+			usuariodb.setUsername(usuario.getUsername());
+			usuariodb.setPassword(usuario.getPassword());
 			usuariodb.setTrabajador(usuario.getTrabajador());
 			userservice.update(usuariodb);
 			return new  ResponseEntity<Void>(HttpStatus.OK);

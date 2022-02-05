@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService , UserDetailsService{
 	@Override
 	@Transactional( readOnly = true)
 	public UserVo findByUsername(String username) {
-		return repository.findByUsuario(username);
+		return repository.findByUsername(username);
 	}
 	
 	
@@ -39,11 +39,11 @@ public class UserServiceImpl implements UserService , UserDetailsService{
 			Collection<GrantedAuthority> roles = new ArrayList<>();
 			
 			for(RoleVo role:user.getItemsRole()) {
-				roles.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
+				roles.add(new SimpleGrantedAuthority("ROLE_" + role.getType()));
 			}
 			
 			
-			return new User(user.getUsuario(), user.getContraseña(), roles);
+			return new User(user.getUsername(), user.getPassword(), roles);
 			
 		}
 				
